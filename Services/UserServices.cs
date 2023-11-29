@@ -7,8 +7,8 @@ namespace Services
     public class UserServices : IUserServices
     {
         private readonly IUnitOfWork _unitOfWork;
-        private readonly IUserServices _iUserProfileServices;
-        public UserServices(IUnitOfWork unitOfWork, IUserServices userProfileServices)
+        private readonly IUserProfileServices _iUserProfileServices;
+        public UserServices(IUnitOfWork unitOfWork, IUserProfileServices userProfileServices)
         {
             _unitOfWork = unitOfWork;
             _iUserProfileServices = userProfileServices;
