@@ -10,8 +10,7 @@ namespace CrudApplication
     {
         public static void Configurate(IServiceCollection services, IConfiguration configuration)
         {
-            services.AddScoped<IRepository<User>,UserRepository>();
-            services.AddScoped<IRepository<UserProfile>, UserProfileRepository>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddDbContext<CrudApplicationDbContext>(options =>
             options.UseSqlServer(configuration.GetConnectionString("CrudApplication")));
         }
