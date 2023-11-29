@@ -1,6 +1,6 @@
 ﻿namespace CrudApplication.Models
 {
-    public record UserProfile
+    public record UserProfileRecord
     {
         public int UserProfileId { get; init; }
         public string FirstName { get; init; } = null!;

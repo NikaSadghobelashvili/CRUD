@@ -71,7 +71,7 @@ namespace Services
             }
         }
         public IEnumerable<UserProfile>? GetAllUserProfiles() => _unitOfWork.UserProfileRepository.GetAll();
-        public IEnumerable<UserProfile>? GetUserProfiles(Func<UserProfile, bool> predicate)
-         => _unitOfWork.UserProfileRepository.GetAll()?.Where(predicate);
+        public UserProfile? GetUserProfile(int userId)
+               => _unitOfWork.UserProfileRepository.GetById(userId);
     }
 }

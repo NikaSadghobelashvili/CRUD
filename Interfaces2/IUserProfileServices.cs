@@ -10,6 +10,6 @@ namespace Interfaces
         public void UpdateUserProfile(UserProfile userProfile);
         public void DeleteUser(int userId);
         public IEnumerable<UserProfile>? GetAllUserProfiles();
-        public IEnumerable<UserProfile>? GetUserProfiles(Func<UserProfile, bool> predicate);
+        public UserProfile? GetUserProfile(int userId);
     }
 }

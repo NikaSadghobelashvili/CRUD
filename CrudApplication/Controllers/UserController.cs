@@ -1,5 +1,9 @@
-﻿using Interfaces;
+﻿using AutoMapper;
+using DTO;
+using Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using Services;
+using CrudApplication.Models;
 
 namespace CrudApplication.Controllers
 {
@@ -7,16 +11,35 @@ namespace CrudApplication.Controllers
     [Route("crud/[controller]")]
     public class UserController : ControllerBase
     {
-        private readonly IUserProfileServices _iUserProfileServices;
-        public UserController(IUserProfileServices iUserProfileService)
+        private readonly IUserProfileServices _userProfileServices;
+        private readonly IMapper _mapper;
+        public UserController(IUserProfileServices iUserProfileService, IMapper mapper)
         {
-            _iUserProfileServices = iUserProfileService;
+            _userProfileServices = iUserProfileService;
+            _mapper = mapper;
+        }
+        [HttpGet]
+        public IActionResult GetAllUserProfiles()
+        {
+            var profiles = _userProfileServices.GetAllUserProfiles();
+            if (profiles == null || !profiles.Any())
+            {
+                return NotFound("No user profiles found.");
+            }
+            var mappedProfiles = _mapper.Map<IEnumerable<UserProfileRecord>>(profiles);
+            return Ok(mappedProfiles);
         }
         [HttpGet]
         [Route("{id}")]
-        public IActionResult Get(int id)
+        public IActionResult GetUserProfile(int id)
         {
-            return Ok(_iUserProfileServices.GetUserProfiles(u => u.UserId == id));
+            var profile = _userProfileServices.GetUserProfile(id);
+            if (profile == null)
+            {
+                return NotFound("No user profiles found.");
+            }
+            var mappedProfiles = _mapper.Map<UserProfileRecord>(profile);
+            return Ok(mappedProfiles);
         }
     }
 }
