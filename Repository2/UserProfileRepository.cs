@@ -1,5 +1,6 @@
 ﻿using DTO;
 using Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace Repository
 {
@@ -26,7 +27,7 @@ namespace Repository
 
         public IEnumerable<UserProfile> GetAll()
         {
-            return _dbContext.UserProfiles;
+            return _dbContext.UserProfiles.Include(profile => profile.User).ToList();
         }
 
         public UserProfile? GetById(int userId)
