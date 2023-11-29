@@ -3,7 +3,7 @@ using Interfaces;
 
 namespace Services
 {
-    public class UserProfileServices : IServices<UserProfile>
+    public class UserProfileServices : IUserProfileServices
     {
         private readonly IUnitOfWork _unitOfWork;
 
@@ -59,16 +59,8 @@ namespace Services
             try
             {
                 _unitOfWork.BeginTransaction();
-                var userProfile = _unitOfWork.UserProfileRepository.GetById(userId);
-                if (userProfile != null)
-                {
-                    _unitOfWork.UserProfileRepository.Delete(userProfile);
-                }
                 var user = _unitOfWork.UserRepository.GetById(userId);
-                if (user != null)
-                {
-                    _unitOfWork.UserRepository.Delete(user);
-                }
+                _unitOfWork.UserRepository.Delete(user);
                 _unitOfWork.Save();
                 _unitOfWork.CommitTransaction();
             }
@@ -77,11 +69,9 @@ namespace Services
                 _unitOfWork.RollbackTransaction();
                 throw new Exception(ex.Message);
             }
-
         }
-        public IEnumerable<UserProfile> GetAllUserProfiles() => _unitOfWork.UserProfileRepository.GetAll();
-        public IEnumerable<UserProfile> GetUserProfiles(Func<UserProfile, bool> predicate)
+        public IEnumerable<UserProfile>? GetAllUserProfiles() => _unitOfWork.UserProfileRepository.GetAll();
+        public IEnumerable<UserProfile>? GetUserProfiles(Func<UserProfile, bool> predicate)
          => _unitOfWork.UserProfileRepository.GetAll().Where(predicate);
-
     }
 }

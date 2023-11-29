@@ -1,10 +1,9 @@
 ﻿using DTO;
 using Interfaces;
-using Microsoft.EntityFrameworkCore;
 
 namespace Repository
 {
-    public class UserProfileRepository : IRepository<UserProfile>
+    public class UserProfileRepository : IUserProfileRepository
     {
         private readonly CrudApplicationDbContext _dbContext;
         public UserProfileRepository(CrudApplicationDbContext dbContext)
@@ -21,25 +20,31 @@ namespace Repository
 
         public void Delete(UserProfile entity)
         {
-            _dbContext.UserProfiles.Remove(entity);
-            _dbContext.SaveChanges();
+            if (entity != null)
+            {
+                entity.User.IsActive = false;
+            }
         }
 
         public IEnumerable<UserProfile> GetAll()
         {
-            return _dbContext.UserProfiles.Include(profile => profile.User).ToList();
+            return _dbContext.UserProfiles.Where(up => up.User.IsActive);
         }
 
         public UserProfile? GetById(int userId)
         {
-            return _dbContext.UserProfiles.FirstOrDefault(up => up.UserId == userId);
+            return _dbContext.UserProfiles.FirstOrDefault(up => up.UserId == userId && up.User.IsActive);
         }
 
         public int Update(UserProfile entity)
         {
-            _dbContext.UserProfiles.Update(entity);
-            _dbContext.SaveChanges();
-            return entity.UserProfileId;
+            if (entity != null && entity.User.IsActive)
+            {
+                _dbContext.UserProfiles.Update(entity);
+                _dbContext.SaveChanges();
+                return entity.UserProfileId;
+            }
+            return -1;
         }
     }
 }

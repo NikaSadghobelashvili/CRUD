@@ -1,5 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
-using DTO;
+﻿using DTO;
+using Microsoft.EntityFrameworkCore;
 
 namespace Repository
 {
@@ -9,14 +9,14 @@ namespace Repository
         {
 
         }
-        public DbSet<User> Users { get; set; }
-        public DbSet<UserProfile> UserProfiles { get; set; }
+        public DbSet<User> Users { get; set; } = null!;
+        public DbSet<UserProfile> UserProfiles { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<User>().HasIndex(u => u.UserId).IsUnique();
-            modelBuilder.Entity<User>().HasIndex(u=>u.Username).IsUnique();
-            modelBuilder.Entity<UserProfile>().HasIndex(u=>u.PersonalNumber).IsUnique();
+            modelBuilder.Entity<User>().HasIndex(u => u.Username).IsUnique();
+            modelBuilder.Entity<UserProfile>().HasIndex(u => u.PersonalNumber).IsUnique();
             modelBuilder.Entity<UserProfile>().HasIndex(u => u.UserProfileId).IsUnique();
             modelBuilder.Entity<UserProfile>().HasIndex(u => u.UserId).IsUnique();
         }

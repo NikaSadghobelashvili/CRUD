@@ -1,5 +1,4 @@
-﻿using DTO;
-using Interfaces;
+﻿using Interfaces;
 namespace Repository
 {
     public class UnitOfWork : IUnitOfWork
@@ -13,8 +12,8 @@ namespace Repository
             UserProfileRepository = new UserProfileRepository(_dbContext);
         }
 
-        public IRepository<User> UserRepository { get; }
-        public IRepository<UserProfile> UserProfileRepository { get; }
+        public IUserRepository UserRepository { get; }
+        public IUserProfileRepository UserProfileRepository { get; }
 
         public void Save()
         {

@@ -1,12 +1,9 @@
-﻿using System;
-using DTO;
-
-namespace Interfaces
+﻿namespace Interfaces
 {
     public interface IUnitOfWork : IDisposable
     {
-        IRepository<User> UserRepository { get; }
-        IRepository<UserProfile> UserProfileRepository { get; }
+        IUserRepository UserRepository { get; }
+        IUserProfileRepository UserProfileRepository { get; }
         void Save();
         void BeginTransaction();
         void CommitTransaction();

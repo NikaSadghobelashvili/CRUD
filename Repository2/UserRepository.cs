@@ -3,7 +3,7 @@ using Interfaces;
 
 namespace Repository
 {
-    public class UserRepository : IRepository<User>
+    public class UserRepository : IUserRepository
     {
         private readonly CrudApplicationDbContext _dbContext;
         public UserRepository(CrudApplicationDbContext dbContext)
@@ -18,18 +18,13 @@ namespace Repository
             return entity.UserId;
         }
 
-        public void Delete(User entity)
+        public void Delete(User? entity)
         {
             if (entity != null)
             {
                 entity.IsActive = false;
             }
 
-        }
-
-        public IEnumerable<User> GetAll()
-        {
-            return _dbContext.Users;
         }
 
         public User? GetById(int id)
