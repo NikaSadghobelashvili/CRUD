@@ -38,7 +38,8 @@ namespace Repository
 
         public int Update(UserProfile entity)
         {
-            if (entity != null && entity.User.IsActive)
+            var user = _dbContext.Users.SingleOrDefault(u => u.UserId == entity.UserId);
+            if (entity != null && user!.IsActive)
             {
                 _dbContext.UserProfiles.Update(entity);
                 _dbContext.SaveChanges();

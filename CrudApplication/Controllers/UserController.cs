@@ -38,8 +38,45 @@ namespace CrudApplication.Controllers
             {
                 return NotFound("No user profiles found.");
             }
-            var mappedProfiles = _mapper.Map<UserProfileRecord>(profile);
-            return Ok(mappedProfiles);
+            var mappedProfile = _mapper.Map<UserProfileRecord>(profile);
+            return Ok(mappedProfile);
+        }
+        [HttpPut("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public IActionResult UpdateUserProfile(int id, [FromBody] UserProfileUpdateModel updatedProfile)
+        {
+            var existingProfile = _userProfileServices.GetUserProfile(id);
+            if (existingProfile == null)
+            {
+                return NotFound();
+            }
+            var updatedEntity = _mapper.Map<UserProfile>(updatedProfile);
+
+           
+            existingProfile.FirstName = updatedEntity.FirstName;
+            existingProfile.LastName = updatedEntity.LastName;
+            existingProfile.PersonalNumber = updatedEntity.PersonalNumber;
+
+            _userProfileServices.UpdateUserProfile(existingProfile);
+
+            return NoContent();
+        }
+
+        [HttpDelete("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public IActionResult DeleteUserProfile(int id)
+        {
+            var existingProfile = _userProfileServices.GetUserProfile(id);
+            if (existingProfile == null)
+            {
+                return NotFound();
+            }
+
+            _userProfileServices.DeleteUser(existingProfile.UserId);
+            return NoContent(); 
         }
     }
 }
