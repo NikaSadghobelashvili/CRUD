@@ -1,4 +1,8 @@
+using CrudApplication;
+
 var builder = WebApplication.CreateBuilder(args);
+
+Configuration.Configurate(builder.Services,builder.Configuration);
 
 // Add services to the container.
 
@@ -23,3 +27,4 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+

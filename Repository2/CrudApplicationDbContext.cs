@@ -3,16 +3,14 @@ using DTO;
 
 namespace Repository
 {
-   
-    // Your DbContext class
     public class CrudApplicationDbContext : DbContext
     {
-        public CrudApplicationDbContext(DbContextOptions<CrudApplicationDbContext> options): base(options)
+        public CrudApplicationDbContext(DbContextOptions<CrudApplicationDbContext> options) : base(options)
         {
 
         }
-        public DbSet<User>? Users { get; set; }
-        public DbSet<UserProfile>? UserProfiles { get; set; }
+        public DbSet<User> Users { get; set; }
+        public DbSet<UserProfile> UserProfiles { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
