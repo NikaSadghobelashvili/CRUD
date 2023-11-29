@@ -29,7 +29,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\DTO2\DTO.csproj" />
-    <ProjectReference Include="..\Interfaces\Interfaces.csproj" />
+    <ProjectReference Include="..\Interfaces2\Interfaces.csproj" />
   </ItemGroup>
 
 </Project>

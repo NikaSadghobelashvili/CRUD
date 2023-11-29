@@ -9,14 +9,9 @@ namespace CrudApplication.Controllers
     [Route("crud/[controller]")]
     public class UserController: ControllerBase
     {
-        private readonly IRepository<User> _repository;
-        public UserController(IRepository<User> repository)
+        public UserController()
         {
-            _repository = repository;
+           
         }
-
-        [HttpGet]
-        [Route("{id}")]
-        public IActionResult GetUser(int id) => Ok(_repository.GetById(id));
     }
 }
