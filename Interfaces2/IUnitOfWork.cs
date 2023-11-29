@@ -8,5 +8,8 @@ namespace Interfaces
         IRepository<User> UserRepository { get; }
         IRepository<UserProfile> UserProfileRepository { get; }
         void Save();
+        void BeginTransaction();
+        void CommitTransaction();
+        void RollbackTransaction();
     }
 }

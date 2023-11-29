@@ -29,9 +29,9 @@ namespace Repository
             return _dbContext.UserProfiles;
         }
 
-        public UserProfile? GetById(int id)
+        public UserProfile? GetById(int userId)
         {
-            return _dbContext.UserProfiles.FirstOrDefault(up => up.UserProfileId == id);
+            return _dbContext.UserProfiles.FirstOrDefault(up => up.UserId == userId);
         }
 
         public int Update(UserProfile entity)

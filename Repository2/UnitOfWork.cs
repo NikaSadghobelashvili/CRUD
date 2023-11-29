@@ -1,5 +1,5 @@
-﻿using Interfaces;
-using DTO;
+﻿using DTO;
+using Interfaces;
 namespace Repository
 {
     public class UnitOfWork : IUnitOfWork
@@ -24,6 +24,20 @@ namespace Repository
         public void Dispose()
         {
             _dbContext.Dispose();
+        }
+        public void BeginTransaction()
+        {
+            _dbContext.Database.BeginTransaction();
+        }
+
+        public void CommitTransaction()
+        {
+            _dbContext.Database.CommitTransaction();
+        }
+
+        public void RollbackTransaction()
+        {
+            _dbContext.Database.RollbackTransaction();
         }
     }
 }

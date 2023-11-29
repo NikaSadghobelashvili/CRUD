@@ -1,10 +1,9 @@
 ﻿using DTO;
 using Interfaces;
-using Microsoft.EntityFrameworkCore;
 
 namespace Repository
 {
-    public class UserRepository: IRepository<User>
+    public class UserRepository : IRepository<User>
     {
         private readonly CrudApplicationDbContext _dbContext;
         public UserRepository(CrudApplicationDbContext dbContext)
@@ -21,7 +20,11 @@ namespace Repository
 
         public void Delete(User entity)
         {
-            _dbContext.Users.Remove(entity);
+            if (entity != null)
+            {
+                entity.IsActive = false;
+            }
+
         }
 
         public IEnumerable<User> GetAll()
@@ -35,9 +38,23 @@ namespace Repository
         }
         public int Update(User entity)
         {
-            _dbContext.Users.Update(entity);
-            _dbContext.SaveChanges();
-            return entity.UserId;
+            if (entity != null)
+            {
+                _dbContext.Users.Update(entity);
+                _dbContext.SaveChanges();
+                return entity.UserId;
+            }
+            return -1;
+        }
+
+        public User? GetByUsername(string username)
+        {
+            return _dbContext.Users.FirstOrDefault(u => u.Username == username);
+        }
+
+        public User? GetByEmail(string email)
+        {
+            return _dbContext.Users.FirstOrDefault(u => u.Email == email);
         }
     }
 }
