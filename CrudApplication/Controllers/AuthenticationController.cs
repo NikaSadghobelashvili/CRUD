@@ -3,6 +3,7 @@ using Interfaces;
 using CrudApplication.Models;
 using AutoMapper;
 using DTO;
+using SharedLibraryProject;
 
 namespace CrudApplication.Controllers
 {
@@ -30,7 +31,9 @@ namespace CrudApplication.Controllers
                 return BadRequest("Username or email already exists");
             }
 
+            string hashedPassword = PasswordHashUtility.HashPassword(userRegisterModel.Password);
             var user = _mapper.Map<User>(userRegisterModel);
+            user.Password = hashedPassword;
             var userProfile = _mapper.Map<UserProfile>(userRegisterModel);
 
             _userProfileService.Insert(user, userProfile);

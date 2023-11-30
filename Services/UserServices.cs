@@ -21,11 +21,11 @@ namespace Services
                 var user = new User
                 {
                     Username = username,
-                    Password = password,
+                    Password = PasswordHashUtility.HashPassword(password),
                     Email = email,
                     IsActive = true,
                 };
-                (_iUserProfileServices as UserProfileServices)?.Insert(user, userProfile);
+                _iUserProfileServices.Insert(user, userProfile);
                 _unitOfWork.CommitTransaction();
             }
             catch (Exception ex)
@@ -37,7 +37,7 @@ namespace Services
         public bool Login(string username, string password)
         {
             var user = _unitOfWork.UserRepository.GetByUsername(username);
-            if (user != null && user.Password==password)
+            if (user != null && VerifyPassword(user, password))
             {
                 return true;
             }
