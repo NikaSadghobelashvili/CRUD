@@ -17,7 +17,7 @@ namespace Services
             try
             {
                 _unitOfWork.BeginTransaction();
-                userProfile.UserId = user.UserId;
+                userProfile.User = user;
                 _unitOfWork.UserRepository.Add(user);
                 _unitOfWork.UserProfileRepository.Add(userProfile);
                 _unitOfWork.Save();

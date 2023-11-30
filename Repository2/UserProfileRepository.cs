@@ -34,7 +34,12 @@ namespace Repository
         public UserProfile? GetById(int userId)
         {
             var user = _dbContext.Users.SingleOrDefault(u => u.UserId == userId);
-            return _dbContext.UserProfiles.FirstOrDefault(up => up.UserId == userId && user!.IsActive);
+            if(user!= null && user.IsActive)
+            {
+                var userProfile = _dbContext.UserProfiles.SingleOrDefault(up => up.UserId == userId);
+                return userProfile;
+            }
+            return null;
         }
 
         public int Update(UserProfile entity)
