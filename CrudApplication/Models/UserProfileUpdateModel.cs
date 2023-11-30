@@ -1,4 +1,4 @@
-﻿public class UserProfileUpdateModel
+﻿public record UserProfileUpdateModel
 {
     public string FirstName { get; set; } = null!;
     public string LastName { get; set; } = null!;

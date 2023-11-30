@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using DTO;
 
-public class MappingProfile : Profile
+public class  MappingProfile : Profile
 {
     public MappingProfile()
     {

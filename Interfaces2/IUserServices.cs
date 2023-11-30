@@ -9,5 +9,8 @@ namespace Interfaces
         public bool VerifyPassword(User user, string password);
         public void DeleteAccount(int userId);
         public void ChangePassword(int userId, string newPassword);
+        public bool VerifyEmail(string email);
+        public bool VerifyUsername(string username);
+        public User? GetUserByUsername(string username);
     }
 }

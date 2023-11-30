@@ -4,9 +4,11 @@ using Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Services;
 using CrudApplication.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CrudApplication.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("crud/[controller]")]
     public class UserController : ControllerBase

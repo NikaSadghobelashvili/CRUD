@@ -20,6 +20,6 @@ namespace DTO
         public string Email { get; set; } = null!;
 
         [Required]
-        public bool IsActive { get; set; }
+        public bool IsActive { get; set; } = true;
     }
 }

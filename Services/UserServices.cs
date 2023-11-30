@@ -18,10 +18,11 @@ namespace Services
             try
             {
                 _unitOfWork.BeginTransaction();
+                string hashedPassword = PasswordHashUtility.HashPassword(password);
                 var user = new User
                 {
                     Username = username,
-                    Password = PasswordHashUtility.HashPassword(password),
+                    Password = hashedPassword,
                     Email = email,
                     IsActive = true,
                 };
@@ -37,7 +38,7 @@ namespace Services
         public bool Login(string username, string password)
         {
             var user = _unitOfWork.UserRepository.GetByUsername(username);
-            if (user != null && VerifyPassword(user, password))
+            if (user != null && PasswordHashUtility.VerifyPassword(user.Password, password))
             {
                 return true;
             }
@@ -71,6 +72,21 @@ namespace Services
                 _unitOfWork.RollbackTransaction();
                 throw new Exception(ex.Message);
             }
+        }
+        public bool VerifyEmail(string email)
+        {
+            var user = _unitOfWork.UserRepository.GetByEmail(email);
+            return user == null;
+        }
+        public bool VerifyUsername(string username)
+        {
+            var user = _unitOfWork.UserRepository.GetByUsername(username);
+            return user == null;
+        }
+        public User? GetUserByUsername(string username)
+        {
+            var user = _unitOfWork.UserRepository.GetByUsername(username);
+            return user;
         }
     }
 }

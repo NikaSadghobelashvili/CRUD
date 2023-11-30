@@ -44,12 +44,22 @@ namespace Repository
 
         public User? GetByUsername(string username)
         {
-            return _dbContext.Users.FirstOrDefault(u => u.Username == username);
+            var user = _dbContext.Users.FirstOrDefault(u => u.Username == username);
+            if (user != null && user.IsActive)
+            {
+                return user;
+            }
+            return null;
         }
 
         public User? GetByEmail(string email)
         {
-            return _dbContext.Users.FirstOrDefault(u => u.Email == email);
+            var user = _dbContext.Users.FirstOrDefault(u => u.Email == email);
+            if (user != null && user.IsActive)
+            {
+                return user;
+            }
+            return null;
         }
     }
 }
